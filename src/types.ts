@@ -1,9 +1,10 @@
-export type BoardId = 'general' | 'looks' | 'lyrics' | 'companions'
+export type BoardId = 'notice' | 'talk' | 'general' | 'creations' | 'lyrics' | 'companions' | 'looks' | 'after'
 
 export type Identity = {
   id: string
   nickname: string
   type: 'anonymous' | 'kakao'
+  role: 'citizen' | 'admin'
 }
 
 export type Comment = {
@@ -22,6 +23,7 @@ export type Post = {
   authorId: string
   authorName: string
   createdAt: string
+  imagePath?: string | null
   comments: Comment[]
 }
 

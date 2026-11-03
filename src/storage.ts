@@ -19,7 +19,8 @@ const samplePosts: Post[] = [
   },
   {
     id: 'record-002',
-    board: 'looks',
+    board: 'talk',
+    imagePath: null,
     title: '블랙 퍼레이드 느낌의 겨울 레이어드',
     body: '검정만 쓰기보다 바랜 회색 셔츠와 작은 붉은 포인트를 섞어 볼 생각이에요. 오래 서 있어도 편한 신발이 제일 중요합니다.',
     authorId: 'citizen-01',
@@ -49,9 +50,14 @@ export function getIdentity(): Identity | null {
   return read<Identity | null>(keys.identity, null)
 }
 
+const pick = (list: string[]) => list[Math.floor(Math.random() * list.length)]
+
+/** 개인정보 없는 랜덤 별칭 (예: 잔향의 검은 사슴 482) */
+export const randomNickname = () => `${pick(modifiers)} ${pick(nouns)} ${Math.floor(100 + Math.random() * 900)}`
+
 export function createAnonymousIdentity(): Identity {
-  const nickname = `${modifiers[Math.floor(Math.random() * modifiers.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]} ${Math.floor(100 + Math.random() * 900)}`
-  const identity = { id: createId(), nickname, type: 'anonymous' as const }
+  const nickname = randomNickname()
+  const identity: Identity = { id: createId(), nickname, type: 'anonymous', role: 'citizen' }
   write(keys.identity, identity)
   return identity
 }
